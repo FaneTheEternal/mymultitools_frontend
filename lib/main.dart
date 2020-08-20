@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'auth.dart';
 
 void main() {
-  runApp(MyMultiTools());
+  runApp(App());
 }
 
-class MyMultiTools extends StatelessWidget {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'MyMultiTools',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('MyMultiTools'),
-        ),
-        body: Center(child: Text('To be in development...')),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthModel()),
+      ],
+      child: MaterialApp(
+        title: 'MyMultiTools',
+        home: Scaffold(
+          body: Auth(),
+        )
       ),
     );
   }
