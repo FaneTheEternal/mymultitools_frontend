@@ -4,6 +4,7 @@ import 'package:mymultitools_frontend/apps/cards.dart';
 import 'package:mymultitools_frontend/apps/notes.dart';
 import 'package:mymultitools_frontend/apps/profile.dart';
 import 'package:mymultitools_frontend/apps/schedule.dart';
+import 'package:provider/provider.dart';
 
 class MyMultiTools extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _MyMultiToolsState extends State<MyMultiTools> {
   static List<Widget> _widgetOptions = [
     Schedule(),
     Cards(),
-    Notes(),
+    NotesList(),
     Profile(),
   ];
 
@@ -33,7 +34,12 @@ class _MyMultiToolsState extends State<MyMultiTools> {
         title: Text('MyMultiTools'),
       ),
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: MultiProvider(
+            providers: [
+              ChangeNotifierProvider(create: (context) => Notes()),
+            ],
+            child: _widgetOptions.elementAt(_selectedIndex)
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [

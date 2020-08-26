@@ -11,4 +11,9 @@ class KeyWords {
   static ReCase get cards => new ReCase('карты');
   static ReCase get notes => new ReCase('заметки');
   static ReCase get profile => new ReCase('профиль');
+
+  static ReCase get title => new ReCase('название');
+  static ReCase get content => new ReCase('содержание');
+
+  static ReCase get devWrong => new ReCase('dev was wrong');
 }
