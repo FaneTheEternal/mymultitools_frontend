@@ -15,7 +15,7 @@ class _MyMultiToolsState extends State<MyMultiTools> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = [
-    Schedule(),
+    ScheduleList(),
     CardsList(),
     NotesList(),
     Profile(),
@@ -37,7 +37,8 @@ class _MyMultiToolsState extends State<MyMultiTools> {
         child: MultiProvider(
             providers: [
               ChangeNotifierProvider(create: (context) => Notes()),
-              ChangeNotifierProvider(create: (context) => Cards())
+              ChangeNotifierProvider(create: (context) => Cards()),
+              ChangeNotifierProvider(create: (context) => Schedule()),
             ],
             child: _widgetOptions.elementAt(_selectedIndex)
         ),
