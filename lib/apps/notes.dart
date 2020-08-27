@@ -18,7 +18,6 @@ class Note {
   }
 }
 
-
 class Notes extends ChangeNotifier {
   final List<Note> _notes = [];
 
@@ -50,60 +49,50 @@ class _NotesListState extends State<NotesList> {
   Widget build(BuildContext context) {
     return Consumer<Notes>(
       builder: (context, notes, child) {
-        return Column(
-          children: [
-            Flexible(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Row(
-                      children: [
-                        Expanded(child: Text('${notes.at(index).name}')),
-                        IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            Provider.of<Notes>(context).remove(index);
-                          },
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NoteDetail(
-                                note: notes.at(index), index: index)
-                        )
-                      );
-                    },
-                  );
-                },
-                itemCount: notes.count,
-              ),
-            ),
-            Row(
-              textDirection: TextDirection.rtl,
-              children: [
-                FloatingActionButton(
-                  child: Icon(Icons.add),
-                  onPressed: () {
-                    var note = Note(name: 'new', data: '');
-                    notes.add(note);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => NoteDetail(
-                              note: note,
-                              index: notes.count - 1,
-                              isNew: true
-                          )
-                      )
+        return Scaffold(
+          body: Column(
+            children: [
+              Flexible(
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Row(
+                        children: [
+                          Expanded(child: Text('${notes.at(index).name}')),
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              Provider.of<Notes>(context).remove(index);
+                            },
+                          ),
+                        ],
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NoteDetail(
+                                    note: notes.at(index), index: index)));
+                      },
                     );
                   },
-                )
-              ],
-            )
-          ],
+                  itemCount: notes.count,
+                ),
+              )
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () {
+              var note = Note(name: 'new', data: '');
+              notes.add(note);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NoteDetail(
+                          note: note, index: notes.count - 1, isNew: true)));
+            },
+          ),
         );
       },
     );
@@ -203,15 +192,15 @@ class _NoteDetailState extends State<NoteDetail> {
           TextField(
             controller: nameController,
             decoration: InputDecoration(
-              labelText: KeyWords.title.sentenceCase,
-              errorText: nameController.text.isEmpty ? KeyWords.emptyText.sentenceCase : null
-            ),
+                labelText: KeyWords.title.sentenceCase,
+                errorText: nameController.text.isEmpty
+                    ? KeyWords.emptyText.sentenceCase
+                    : null),
           ),
           TextField(
             controller: dataController,
-            decoration: InputDecoration(
-              labelText: KeyWords.content.sentenceCase
-            ),
+            decoration:
+                InputDecoration(labelText: KeyWords.content.sentenceCase),
           )
         ],
       ),
