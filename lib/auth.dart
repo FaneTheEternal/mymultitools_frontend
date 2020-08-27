@@ -40,8 +40,6 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  bool _validate = true;
-
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -55,28 +53,26 @@ class _LoginFormState extends State<LoginForm> {
           controller: usernameController,
           decoration: InputDecoration(
               labelText: KeyWords.username.sentenceCase,
-              errorText: _validate ? null : KeyWords.emptyText.sentenceCase),
+              errorText: usernameValid ? null : KeyWords.emptyText.sentenceCase),
         ),
         TextField(
           controller: passwordController,
           decoration: InputDecoration(
               labelText: KeyWords.password.sentenceCase,
-              errorText: _validate ? null : KeyWords.emptyText.sentenceCase),
+              errorText: passwordValid ? null : KeyWords.emptyText.sentenceCase),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: RaisedButton(
             onPressed: () {
               setState(() {
-                _validate = usernameController.text.isEmpty ||
-                        passwordController.text.isEmpty
-                    ? false
-                    : true;
+                if (usernameValid && passwordValid) {
+                  Provider.of<AuthModel>(context, listen: false)
+                      .login(usernameController.text, passwordController.text);
+                  usernameController.clear();
+                  passwordController.clear();
+                }
               });
-              if (_validate) {
-                Provider.of<AuthModel>(context, listen: false)
-                    .login(usernameController.text, passwordController.text);
-              }
             },
             child: Text(KeyWords.loginEnter.sentenceCase),
             color: Colors.yellow,
@@ -86,6 +82,9 @@ class _LoginFormState extends State<LoginForm> {
       ],
     );
   }
+
+  bool get usernameValid => usernameController.text.isNotEmpty;
+  bool get passwordValid => passwordController.text.isNotEmpty;
 
   @override
   void dispose() {
