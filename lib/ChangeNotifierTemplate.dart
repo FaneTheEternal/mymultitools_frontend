@@ -13,6 +13,8 @@ mixin ChangeNotifierListMixin<T> on ChangeNotifier {
 
   int get count => _list.length;
 
+  init() => _initValue();
+
   initValue() {return null;}
 
   _initValue() {
