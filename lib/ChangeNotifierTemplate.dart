@@ -13,27 +13,33 @@ mixin ChangeNotifierListMixin<T> on ChangeNotifier {
 
   int get count => _list.length;
 
-  initValue() {
+  initValue() {return null;}
+
+  _initValue() {
     beInit = true;
+    final List<T> init = initValue() ?? [];
+    for (T i in init) {
+      _list.add(i);
+    }
   }
 
   add(T t) {
     if (!canAdd) throw Exception('Cant use add method');
-    if (!beInit) initValue();
+    if (!beInit) _initValue();
     _list.add(t);
     notifyListeners();
   }
 
   remove(int index) {
     if (!canRemove) throw Exception('Cant use remove method');
-    if (!beInit) initValue();
+    if (!beInit) _initValue();
     _list.removeAt(index);
     notifyListeners();
   }
 
   T at(int index) {
     if (!canAt) throw Exception('Cant use at method');
-    if (!beInit) initValue();
+    if (!beInit) _initValue();
     return _list.elementAt(index);
   }
 
