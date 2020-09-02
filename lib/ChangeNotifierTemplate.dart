@@ -26,21 +26,21 @@ mixin ChangeNotifierListMixin<T> on ChangeNotifier {
   }
 
   add(T t) {
-    if (!canAdd) throw Exception('Cant use add method');
+    if (!canAdd) throw FlutterError('Cant use add method');
     if (!beInit) _initValue();
     _list.add(t);
     notifyListeners();
   }
 
   remove(int index) {
-    if (!canRemove) throw Exception('Cant use remove method');
+    if (!canRemove) throw FlutterError('Cant use remove method');
     if (!beInit) _initValue();
     _list.removeAt(index);
     notifyListeners();
   }
 
   T at(int index) {
-    if (!canAt) throw Exception('Cant use at method');
+    if (!canAt) throw FlutterError('Cant use at method');
     if (!beInit) _initValue();
     return _list.elementAt(index);
   }
