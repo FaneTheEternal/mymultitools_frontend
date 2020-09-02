@@ -1,8 +1,7 @@
-import 'dart:collection';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mymultitools_frontend/ChangeNotifierTemplate.dart';
 import 'package:mymultitools_frontend/KeyWords.dart';
 import 'package:provider/provider.dart';
 
@@ -18,25 +17,13 @@ class Note {
   }
 }
 
-class Notes extends ChangeNotifier {
-  final List<Note> _notes = [];
-
-  add(Note note) {
-    _notes.add(note);
-    notifyListeners();
-  }
-
-  remove(int index) {
-    _notes.removeAt(index);
-    notifyListeners();
-  }
-
-  Note at(int index) {
-    return _notes[index];
-  }
-
-  int get count => _notes.length;
-  UnmodifiableListView get notes => UnmodifiableListView(_notes);
+class Notes extends ChangeNotifier with ChangeNotifierListMixin<Note> {
+  @override
+  bool get canAdd => true;
+  @override
+  bool get canRemove => true;
+  @override
+  bool get canAt => true;
 }
 
 class NotesList extends StatefulWidget {
